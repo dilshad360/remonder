@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { auth } from "@/firebase/firebase";
 import { createUserWithEmailAndPassword , updateProfile ,GoogleAuthProvider , signInWithPopup } from "firebase/auth";
+import { useAuth } from "@/firebase/auth";
+import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
+import Link from "next/link";
+
 
 function register() {
 
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const {authUser, isLoading, setAuthUser} = useAuth();
 
   const provider = new GoogleAuthProvider();
+
+  const router = useRouter()
+
+  useEffect(()=>{
+    if(!isLoading && authUser) {
+        router.push("/");
+    }
+  },[authUser, isLoading])
 
   const signupHandler = async() => {
      if(!username || !email || !password) return;
@@ -18,7 +32,11 @@ function register() {
         await updateProfile(auth.currentUser,{
           displayName: username
         })
-        // console.log(user)
+        setAuthUser({
+          uid: user.uid,
+          email: user.email,
+          username
+        })
      } catch (error) {
         console.log("error found",error)
      }
@@ -32,16 +50,16 @@ function register() {
     }
   }
    
-  return (
+  return isLoading || (!isLoading && authUser) ? (<Loader/>) : (
     <div className="flex lg:h-[100vh]">
       <div className="w-full p-8 flex justify-center items-center">
         <div className="p-8 w-[560px]">
           <h1 className="text-5xl font-semibold ">Sign Up</h1>
           <p className="mt-4">
             Already have an account ?{" "}
-            <span className="underline cursor-pointer hover:text-yellow-500">
+            <Link href={"/login"} className="underline cursor-pointer hover:text-yellow-500">
               Login
-            </span>
+            </Link>
           </p>
           <div onClick={signInWithGoogle} className="mt-10 flex w-full bg-gray-300 justify-center items-center gap-4 py-3 rounded-full cursor-pointer transition-transform active:scale-90 hover:bg-black/90  hover:text-white">
             <FcGoogle size={22} />
