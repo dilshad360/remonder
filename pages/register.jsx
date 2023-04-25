@@ -28,14 +28,14 @@ function register() {
   const signupHandler = async() => {
      if(!username || !email || !password) return;
      try {
-        const user = await createUserWithEmailAndPassword(auth, email, password)
+        const {user} = await createUserWithEmailAndPassword(auth, email, password)
         await updateProfile(auth.currentUser,{
           displayName: username
         })
         setAuthUser({
           uid: user.uid,
           email: user.email,
-          username
+          username,
         })
      } catch (error) {
         console.log("error found",error)
