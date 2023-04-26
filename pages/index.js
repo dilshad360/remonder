@@ -36,18 +36,20 @@ export default function Home() {
   }, [authUser, isLoading]);
 
   const addReminder = async () => {
-    console.log(datetimeInput)
-    try {
-      const docRef = await addDoc(collection(db, "reminders"), {
-        owner: authUser.uid,
-        content: reminderInput,
-        datetime: datetimeInput,
-        completed: false,
-      });
-      fetchReminder(authUser.uid);
-      setReminderInput("");
-    } catch (error) {
-      console.error(error);
+    if (reminderInput) {
+      try {
+        const docRef = await addDoc(collection(db, "reminders"), {
+          owner: authUser.uid,
+          content: reminderInput,
+          datetime: datetimeInput,
+          completed: false,
+        });
+        fetchReminder(authUser.uid);
+        setReminderInput("");
+        setDatetimeInput("");
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -84,7 +86,7 @@ export default function Home() {
       const querySnapshot = await getDocs(q);
       let data = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
         data.push({ ...doc.data(), id: doc.id });
       });
       setReminderList(data);
@@ -122,11 +124,12 @@ export default function Home() {
                 className="font-semibold border-[2px] border-black h-[40px] px-4 shadow-md rounded-md focus-visible:outline-yellow-400 text-lg transition-all duration-200"
               />
               <input
-              value={datetimeInput}
-              onChange={(e) => {
-                setDatetimeInput(e.target.value);
-              }}
+                value={datetimeInput}
+                onChange={(e) => {
+                  setDatetimeInput(e.target.value);
+                }}
                 type="datetime-local"
+                onKeyUp={onKeyUp}
                 className="font-semibold border-[2px] border-black h-[40px]  px-4 shadow-md rounded-md focus-visible:outline-yellow-400 text-lg transition-all duration-200"
               />
             </div>
@@ -154,19 +157,25 @@ export default function Home() {
                     onChange={(e) => markAsCompletedHandler(e, reminder.id)}
                   />
                   <div className="flex flex-col">
-                  <label
-                    htmlFor={`reminder-${reminder.id}`}
-                    className={`font-medium text-lg ${
-                      reminder.completed ? "line-through" : ""
-                    }`}
-                  >
-                    {reminder.content}
-                  </label>
-                  { reminder.datetime &&
-                    <span className={`text-xs font-sans font-medium text-gray-500 ${
-                      reminder.completed ? "line-through" : ""
-                    } `}>{moment(reminder.datetime).format("MMM D, YYYY, h:mm a")} </span>
-                  }
+                    <label
+                      htmlFor={`reminder-${reminder.id}`}
+                      className={`font-medium text-lg ${
+                        reminder.completed ? "line-through" : ""
+                      }`}
+                    >
+                      {reminder.content}
+                    </label>
+                    {reminder.datetime && (
+                      <span
+                        className={`text-xs font-sans font-medium text-gray-500 ${
+                          reminder.completed ? "line-through" : ""
+                        } `}
+                      >
+                        {moment(reminder.datetime).format(
+                          "MMM D, YYYY, h:mm a"
+                        )}{" "}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center gap-3 ">
