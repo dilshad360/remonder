@@ -111,7 +111,7 @@ export default function Home() {
             <span className="text-4xl mb-2">🔔</span>
             <h1 className="text-4xl md:text-5xl font-bold">Remonder's</h1>
           </div>
-          <div className="flex justify-center items-center mt-6 gap-2">
+          <div className="flex justify-center items-center mt-6 gap-2 flex-col sm:flex-row">
             <div className="flex flex-col w-full grow gap-1">
               <input
                 type="text"
@@ -135,7 +135,7 @@ export default function Home() {
             </div>
             <button
               onClick={addReminder}
-              className="bg-black h-[80px] w-[80px] text-white  flex justify-center items-center shadow-md rounded-md hover:bg-black/90 active:bg-yellow-400 active:scale-90 transition-transform"
+              className="bg-black h-[40px] w-full sm:h-[80px] sm:w-[80px] text-white  flex justify-center items-center shadow-md rounded-md hover:bg-black/90 active:bg-yellow-400 active:scale-90 transition-transform"
             >
               <FaPlus size={20} />
             </button>

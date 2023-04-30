@@ -13,7 +13,6 @@ export default function useFirebaseAuth() {
     const [isloading, setIsLoading] = useState(true);
 
     const clear = () => {
-        console.log("ll")
         setAuthUser(null);
         setIsLoading(false);
     };

@@ -34,6 +34,8 @@ function login() {
         console.log(user)
     } catch (error) {
         console.log("error found", error)
+        const message = JSON.parse(JSON.stringify(error))
+        alert(message.code)
     }
   }
 

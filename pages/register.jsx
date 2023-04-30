@@ -38,7 +38,9 @@ function register() {
           username,
         })
      } catch (error) {
-        console.log("error found",error)
+        console.log("error found", error)
+        const message = JSON.parse(JSON.stringify(error))
+        alert(message.code)
      }
   }
 
