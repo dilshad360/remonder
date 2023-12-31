@@ -10,6 +10,7 @@ import { useAuth } from "@/firebase/auth";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 const provider = new GoogleAuthProvider();
 
@@ -35,7 +36,7 @@ function login() {
     } catch (error) {
         console.log("error found", error)
         const message = JSON.parse(JSON.stringify(error))
-        alert(message.code)
+        toast.error(message.code.replace(/^auth\//, ""))
     }
   }
 

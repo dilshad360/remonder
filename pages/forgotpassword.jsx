@@ -2,6 +2,7 @@ import { auth } from '@/firebase/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import React, { useState } from 'react'
 import { useRouter } from "next/router";
+import toast from 'react-hot-toast';
 
 
 
@@ -15,10 +16,10 @@ function forgotpassword() {
     const resetHandler = async () => {
         if(!email) return;
         sendPasswordResetEmail(auth, email).then(data => {
-            alert('Password reset link sent to your email.')
+            toast.success('Password reset link sent to your email.',{duration: 4000})
             router.push('/login')
         }).catch(err => {
-            alert(err.code)
+            toast.error(err.code.replace(/^auth\//, ""))
         })
     }
 
