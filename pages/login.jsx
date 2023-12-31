@@ -84,6 +84,7 @@ function login() {
               required
               className="font-medium border-b border-black p-2 outline-0 focus-within:border-yellow-400"
             />
+          <Link className="mt-3 text-right text-sm underline cursor-pointer hover:text-yellow-500" href="/forgotpassword">Forgot password?</Link>
           </div>
           <button onClick={loginHandler} className="mt-10 bg-black w-32 py-3 text-white font-semibold rounded-full hover:bg-black/90 active:scale-90 transition-transform">
             Sign In
