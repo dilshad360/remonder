@@ -23,17 +23,17 @@ export default function Home() {
   const [datetimeInput, setDatetimeInput] = useState("");
   const [reminderList, setReminderList] = useState([]);
 
-  const { authUser, isLoading, signOut } = useAuth();
+  const { authUser, isloading, signOut } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !authUser) {
+    if (!isloading && !authUser) {
       router.push("/login");
     }
     if (!!authUser) {
       fetchReminder(authUser.uid);
     }
-  }, [authUser, isLoading]);
+  }, [authUser, isloading]);
 
   const addReminder = async () => {
     if (reminderInput) {

@@ -17,17 +17,17 @@ function register() {
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const { authUser, isLoading, setAuthUser } = useAuth();
+  const { authUser, isloading, setAuthUser } = useAuth();
 
   const provider = new GoogleAuthProvider();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && authUser) {
+    if (!isloading && authUser) {
       router.push("/");
     }
-  }, [authUser, isLoading]);
+  }, [authUser, isloading]);
 
   const signupHandler = async () => {
     if (!username || !email || !password) return;
@@ -60,7 +60,7 @@ function register() {
     }
   };
 
-  return isLoading || (!isLoading && authUser) ? (
+  return isloading || (!isloading && authUser) ? (
     <Loader />
   ) : (
     <div className="flex lg:h-[100vh]">

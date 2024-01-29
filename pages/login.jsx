@@ -18,15 +18,15 @@ function login() {
 
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const {authUser, isLoading} = useAuth();
+  const {authUser, isloading} = useAuth();
 
   const router = useRouter()
 
   useEffect(()=>{
-    if(!isLoading && authUser) {
+    if(!isloading && authUser) {
         router.push("/");
     }
-  },[authUser, isLoading])
+  },[authUser, isloading])
 
   const loginHandler = async()=>{
     if(!email || !password) return;
@@ -48,7 +48,7 @@ function login() {
     }
   }
 
-  return isLoading || (!isLoading && authUser) ? (<Loader/>) : (
+  return isloading || (!isloading && authUser) ? (<Loader/>) : (
     <div className="flex lg:h-[100vh]">
       <div className="w-full p-8 flex justify-center items-center">
         <div className="p-8 w-[560px]">
